@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script
+    src="https://code.jquery.com/jquery-1.12.4.min.js"
+    integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+    crossorigin="anonymous"></script>
+</head>
+<body>
+    <h1></h1>
+    <h1 id='head'></h1>
+    
+    <div class="nin">
+        <form action="">
+            <label for="">matricula</label>
+            <input type="text" name="" id="matricula">
+            <label for="">periodo</label>
+            <input type="text" name="" id="periodo">
+            <br>
+            <br>
+            <input type="button" id="buscar" value="Buscar">
+        </form>        
+    </div>
+    <br>
+    <br>
+    <br>
+    <div>
+        <table border="1">
+              <tr>
+                <th>Estudiante</th>
+                <th>Materia</th> 
+                <th>Profesor (a)</th>
+                <th>Periodo</th>
+              </tr>
+         </table>
+    </div>
+
+
+
+<script>
+    $( document ).ready(function() {
+        $('#buscar').click(function(){
+            $.ajax({ 
+                type: 'POST', 
+                url: 'http://35.226.71.156/estudiantes/materias_x_profesor.php', 
+                data: { matricula: $('#matricula').val(), periodo: $('#periodo').val() }, 
+                dataType: 'json',
+                success: function (data) { 
+                    console.log(data);
+                    $.each(data, function(index, element) {
+                        $('table').append('<tr><td>'+element.nombre+'</td><td>'+element.m_descripcion+'</td><td>'+element.p_primer_nombre+' '+element.p_primer_apellido+'</td><td>'+element.periodo+'</td></tr>');
+                    }); 
+                }
+            });
+        });
+    });
+</script>
+
+
+</body>
+</html>
